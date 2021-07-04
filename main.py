@@ -35,7 +35,6 @@ def randomiser(): #the questions will be randomised
       quiz_instance.gameOver()
       gameOver = True;
 
-
 class QuizStarter:
     def __init__(self, parent):
         background_color = "Black" # The background colour
@@ -61,6 +60,8 @@ class QuizStarter:
       if len(name) == 0:
         name = 'Anonymous User'
       self.quiz_frame.destroy()
+      quiz_instance = QuizQ(root)
+
 class QuizQ:
   def __init__(self,parent):
     self.background_color = "Black" # The background colour
@@ -99,7 +100,28 @@ class QuizQ:
       quiz_instance = QuizQ(root)
     self.checkAnswerState*=-1 #alternate between 2 states
 
-  randomiser()
+  def gameOver(self):
+    global quiz_instance
+    self.quiz_frame.destroy()
+    quiz_instance = quizEnd(root)
+    print("Successful")
+
+class quizEnd:
+  def __init__(self, parent):
+    global name, score
+    background_color = "Black"
+    primary_color = "#FEE715"
+
+    self.quiz_frame = Frame(parent, bg = background_color, padx = 100, pady = 100)
+    self.quiz_frame.grid()
+
+    self.heading_label = Label(self.quiz_frame, text = f'Well done {name}!', font = ("Myriad", "20", "italic", "bold"), fg = primary_color, bg = background_color)
+    self.heading_label.grid(row = 0, padx = 1)
+
+    self.heading_label = Label(self.quiz_frame, text = f'your score was {score}!', font = ("Myriad", "16", "italic", "bold"), fg = primary_color, bg = background_color)
+    self.heading_label.grid(row = 1, padx = 10, pady=50)
+
+randomiser()
 if __name__ == "__main__":
   root = Tk()
   root.title("Health and fitness quiz")
